@@ -72,7 +72,7 @@ class ActivityIndicator<T extends ActivityIndicatorRenderer> {
   /// Starts the activity indicator.
   ///
   /// The [interval] is the interval of the activity indicator.
-  void start(Duration interval) {
+  void start([Duration interval = const Duration(milliseconds: 100)]) {
     if (_timer != null) {
       throw StateError('The activity indicator is already started.');
     }

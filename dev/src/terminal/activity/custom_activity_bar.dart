@@ -27,8 +27,8 @@ class CustomActivityBar extends ActivityBar {
 
   const CustomActivityBar({
     super.title,
-    super.success = '✓',
-    super.failure = '✗',
+    super.success,
+    super.failure,
     required this.frames,
   });
 

@@ -1,4 +1,4 @@
-import 'package:consolekit/consolekit.dart';
+import '../dev/consolekit.dart';
 
 void main() {
   var awesome = Awesome();
