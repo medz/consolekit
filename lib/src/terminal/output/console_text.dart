@@ -47,6 +47,10 @@ class ConsoleText
       _fragments[index] = value;
 
   @override
+  ConsoleText operator +(covariant ConsoleText other) =>
+      ConsoleText.fragment([..._fragments, ...other._fragments]);
+
+  @override
   String toString() => _fragments.map((f) => f.text).join();
 }
 
