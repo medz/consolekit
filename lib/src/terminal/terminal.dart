@@ -1,7 +1,9 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'ansi.dart';
 import 'clear/console_clear.dart';
+import 'clear/console_ephemeral.dart';
 import 'console.dart';
 import 'output/console_text.dart';
 
@@ -26,14 +28,24 @@ class Terminal implements Console {
 
   @override
   String input({bool secure = false}) {
+    didOutputLines(1);
     stdin.echoMode = !secure;
     return stdin.readLineSync() ?? '';
   }
 
   @override
   void output(ConsoleText text, {bool newline = true}) {
-    void write(String text) =>
-        newline ? stdout.writeln(text) : stdout.write(text);
+    void write(String text) {
+      final [...lines, last] = const LineSplitter().convert(text);
+      for (final line in lines) {
+        didOutputLines(1);
+        stdout.writeln(line);
+      }
+
+      didOutputLines(1);
+      newline ? stdout.writeln(last) : stdout.write(last);
+    }
+
     final output =
         stylizedOutputOverride ? text.terminalStylize() : text.toString();
 

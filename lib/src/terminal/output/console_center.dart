@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 
 import '../console.dart';
@@ -5,7 +6,10 @@ import '../console.dart';
 extension ConsoleCenter on Console {
   /// Centers a [String] according to this console's [size].
   String center(String text, {String padding = " "}) {
-    return text.split('\n').center(width: size.$1, padding: padding).join('\n');
+    return const LineSplitter()
+        .convert(text)
+        .center(width: size.$1, padding: padding)
+        .join('\n');
   }
 
   /// Centers a iterable of [String] according to this console's [size].
@@ -17,7 +21,7 @@ extension ConsoleCenter on Console {
 extension on Iterable<String> {
   /// Centers a [String] according to this console's [size].
   Iterable<String> center({String padding = " ", required int width}) {
-    final lines = map((e) => e.split('\n')).expand((e) => e);
+    final lines = map((e) => const LineSplitter().convert(e)).expand((e) => e);
     final longest = lines.map((e) => e.length).reduce(max);
     final count = max(0, (width - longest) ~/ 2);
 
