@@ -1,4 +1,4 @@
-import 'dart:io' as io;
+import 'dart:io';
 
 import 'ansi.dart';
 import 'clear/console_clear.dart';
@@ -6,46 +6,66 @@ import 'console.dart';
 import 'output/console_text.dart';
 
 class Terminal implements Console {
-  final io.Stdout stdout;
-  final io.Stdout stderr;
-  final io.Stdin stdin;
-
-  Terminal.std({
-    required this.stdout,
-    required this.stderr,
-    required this.stdin,
-  });
-
-  factory Terminal() =>
-      Terminal.std(stdout: io.stdout, stderr: io.stderr, stdin: io.stdin);
+  Terminal();
 
   /// Performs an `ANSICommand`.
   void command(ANSICommand command) => stdout.write(command.ansi);
 
   @override
-  void clear({ConsoleClear? type, int? lines}) {
-    // TODO: implement clear
+  void clear(ConsoleClear type) {
+    switch (type) {
+      case ConsoleClear.line:
+        command(ANSICommand.cursorUp);
+        command(ANSICommand.eraseLine);
+        break;
+      case ConsoleClear.screen:
+        command(ANSICommand.eraseScreen);
+        break;
+    }
   }
 
   @override
   String input({bool secure = false}) {
-    // TODO: implement input
-    throw UnimplementedError();
+    stdin.echoMode = !secure;
+    return stdin.readLineSync() ?? '';
   }
 
   @override
   void output(ConsoleText text, {bool newline = true}) {
-    // TODO: implement output
+    void write(String text) =>
+        newline ? stdout.writeln(text) : stdout.write(text);
+    final output =
+        stylizedOutputOverride ? text.terminalStylize() : text.toString();
+
+    return write(output);
   }
 
   @override
-  void report(String error, {bool newline = true}) {
-    // TODO: implement report
+  void report(ConsoleText text, {bool newline = true}) {
+    void write(String text) =>
+        newline ? stderr.writeln(text) : stderr.write(text);
+    final output =
+        stylizedOutputOverride ? text.terminalStylize() : text.toString();
+
+    return write(output);
   }
 
   @override
-  (int, int) get size => throw UnimplementedError();
+  (int, int) get size => (stdout.terminalColumns, stdout.terminalLines);
 
   @override
   final Map userinfo = {};
+}
+
+extension StylizedOutputOverride on Console {
+  /// Returns stylized [ConsoleText] output for the [Console].
+  bool get stylizedOutputOverride =>
+      switch (userinfo['stylizedOutputOverride']) {
+        bool override => override,
+        _ => stdout.supportsAnsiEscapes,
+      };
+
+  /// Sets stylized [ConsoleText] output for the [Console].
+  set stylizedOutputOverride(bool override) =>
+      userinfo['stylizedOutputOverride'] = override;
 }

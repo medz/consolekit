@@ -27,10 +27,10 @@ abstract interface class Console {
 
   /// Clears previously printed [Console] output according to the [ConsoleClear]
   /// type specified.
-  void clear({ConsoleClear? type, int? lines});
+  void clear(ConsoleClear type);
 
   /// Outputs an error to the [Console]'s error stream.
-  void report(String error, {bool newline = true});
+  void report(ConsoleText text, {bool newline = true});
 
   /// The current user's information.
   abstract final Map userinfo;

@@ -24,8 +24,14 @@ class ConsoleText
   final List<ConsoleTextFragment> _fragments;
 
   /// Creates a new [ConsoleText].
-  const ConsoleText([List<ConsoleTextFragment>? fragments])
+  const ConsoleText.fragment([List<ConsoleTextFragment>? fragments])
       : _fragments = fragments ?? const [];
+
+  /// Creates a new [ConsoleText] from the given [text] and [style].
+  factory ConsoleText(String text, [ConsoleStyle style = ConsoleStyle.plain]) {
+    final fragment = ConsoleTextFragment(text, style);
+    return ConsoleText.fragment([fragment]);
+  }
 
   @override
   int get length => _fragments.length;
@@ -55,8 +61,7 @@ extension ConsoleTextHelpers on String {
       ConsoleStyle style => style,
       _ => ConsoleStyle(color: color, background: background, bold: bold),
     };
-    final fragment = ConsoleTextFragment(this, resolvedStyle);
 
-    return ConsoleText([fragment]);
+    return ConsoleText(this, resolvedStyle);
   }
 }
