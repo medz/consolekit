@@ -1,7 +1,6 @@
 import '../console.dart';
 import '../output/console_style.dart';
 import '../output/console_text.dart';
-import '../terminal.dart';
 import 'activity_bar.dart';
 import 'activity_indicator.dart';
 
@@ -13,7 +12,7 @@ import 'activity_indicator.dart';
 ///
 /// The `•` character will bounce from left to right while the bar is active.
 class LoadingBar extends ActivityBar {
-  const LoadingBar({super.title, super.failure, super.success});
+  LoadingBar({super.title, super.failure, super.success});
 
   @override
   ConsoleText renderActiveBar(int tick, int width) {
@@ -61,14 +60,4 @@ extension CreateLoadingBarIndicator on Console {
         ),
         console: this,
       );
-}
-
-void main(List<String> args) {
-  final console = Terminal();
-  final indicator = console.createLoadingBarIndicator();
-
-  indicator.start();
-  Future.delayed(const Duration(seconds: 10), () {
-    indicator.success();
-  });
 }

@@ -25,7 +25,7 @@ class CustomActivityBar extends ActivityBar {
   /// corresponding to a single tick in a range of `0...(frames.count - 1)`.
   final List<ConsoleText> frames;
 
-  const CustomActivityBar({
+  CustomActivityBar({
     super.title,
     super.success,
     super.failure,

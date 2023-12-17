@@ -4,11 +4,13 @@ import '../output/console_text.dart';
 import 'activity_indicator.dart';
 
 abstract class ActivityBar implements ActivityIndicatorRenderer {
-  final String? title;
+  /// Returns or sets the title of the activity bar.
+  String? title;
+
   final String success;
   final String failure;
 
-  const ActivityBar({
+  ActivityBar({
     this.title,
     this.success = '✓',
     this.failure = '✗',
