@@ -1,6 +1,6 @@
 name: consolekit
 description: $ Console Kit is a tool for creating interactive CLI applications.
-version: 0.0.1
+version: 0.0.2
 repository: https://github.com/medz/consolekit
 
 environment:

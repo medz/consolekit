@@ -1,3 +1,3 @@
-## 1.0.0
+## 0.0.2
 
-- Initial version.
+- **[FIX]**: Fix the group command display sys message.
