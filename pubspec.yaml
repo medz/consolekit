@@ -1,10 +1,10 @@
 name: consolekit
-description: A starting point for Dart libraries or applications.
-version: 1.0.0
-# repository: https://github.com/my_org/my_repo
+description: $ Console Kit is a tool for creating interactive CLI applications.
+version: 0.0.1
+repository: https://github.com/medz/consolekit
 
 environment:
-  sdk: ^3.2.3
+  sdk: '>=3.0.0 <4.0.0'
 
 dev_dependencies:
   lints: ^2.1.0
