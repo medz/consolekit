@@ -1,4 +1,4 @@
-import '../dev/consolekit.dart';
+import '../lib/consolekit.dart';
 import 'package:test/test.dart';
 
 void main() {
