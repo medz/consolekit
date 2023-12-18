@@ -47,7 +47,7 @@ void main(List<String> args) async {
   final commands = Commands();
   commands.use('foo', FooCommand());
   commands.use('bar', BarCommand());
-  commands.use('say-hello', SayHelloCommand(), isDefault: true);
+  commands.use('say', SayHelloCommand());
 
   final group = commands.group(description: 'A group of commands.');
   final console = Terminal();
