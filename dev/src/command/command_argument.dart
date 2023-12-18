@@ -1,19 +1,24 @@
+import 'commad_error.dart';
+import 'command_any_value.dart';
 import 'command_input.dart';
-import 'signatures/_internal/any_signature.dart';
 
-class CommandArgument extends AnyArgument {
-  const CommandArgument(
+class CommandArgument extends CommandAnyValue<String> {
+  CommandArgument(
     super.name, {
-    super.defaultsTo,
-    super.help,
+    super.description,
     super.optional,
+    super.defaultsTo,
   });
 
   @override
-  void load(CommandInput input) {
+  void setup(CommandInput input) {
     final value = input.moveNextArgument();
-    if (!optional) ArgumentError.checkNotNull(value, name);
+    if (optional && value == null) return;
 
-    AnySignatureValue.storage[this] = value ?? defaultsTo;
+    if (value == null) {
+      throw CommandError('Missing required argument: $name');
+    }
+
+    this.value = value;
   }
 }

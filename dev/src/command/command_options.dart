@@ -1,25 +1,45 @@
+import 'commad_error.dart';
+import 'command_any_value.dart';
 import 'command_input.dart';
-import 'signatures/_internal/any_signature.dart';
 
-class CommandOption extends AnyOption {
-  const CommandOption(
+class CommandOption extends CommandAnyValue<String> {
+  CommandOption(
     super.name, {
-    super.help,
-    this.defaultsTo,
+    super.description,
     super.optional,
-    super.short,
-    super.possible,
-    super.possibleHelp,
+    super.defaultsTo,
+    this.short,
+    this.possible,
+    this.possibleDescriptions,
   });
 
-  /// Defines the default value of the value.
-  final String? defaultsTo;
+  /// Defines the short name of the option.
+  final String? short;
+
+  /// Defines the option's possible values.
+  final Iterable<String>? possible;
+
+  /// Defines the help text for the possible values.
+  final Map<String, String>? possibleDescriptions;
 
   @override
-  void load(CommandInput input) {
+  void setup(CommandInput input) {
     final value = input.moveNextOption(name, short);
-    if (!optional) ArgumentError.checkNotNull(value, name);
+    if (value == null) {
+      if (optional) return;
+      if (possible == null) {
+        throw CommandError('Missing required option: $name');
+      }
 
-    AnySignatureValue.storage[this] = value ?? defaultsTo;
+      throw CommandError('Missing required option: $name. Possible values: '
+          '${possible!.map((e) => '"$e"').join(', ')}');
+    } else if (possible != null) {
+      if (!possible!.contains(value)) {
+        throw CommandError('Invalid option: $name. Possible values: '
+            '${possible!.map((e) => '"$e"').join(', ')}');
+      }
+    }
+
+    this.value = value;
   }
 }

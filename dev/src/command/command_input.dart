@@ -5,11 +5,13 @@ class CommandInput extends Iterable<String> {
   /// input.
   late final List<String> _internalArguments;
 
-  CommandInput(Iterable<String> arguments) : _arguments = arguments {
+  CommandInput(String executable, Iterable<String> arguments)
+      : _arguments = arguments {
     _internalArguments = List.from(_arguments);
+    _executablePath.add(executable);
   }
 
-  final _executablePath = <String>['dart', 'run', 'exe'];
+  final _executablePath = <String>[];
 
   String get executable => _executablePath.join(' ');
 
