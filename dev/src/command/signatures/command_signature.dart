@@ -3,7 +3,7 @@ import '../command_input.dart';
 /// The structure of the inputs that a command can take.
 ///
 /// ```dart
-/// class MySignature imp CommandSignature {
+/// class MySignature implements CommandSignature {
 ///   const MySignature();
 ///
 ///   final greeting =

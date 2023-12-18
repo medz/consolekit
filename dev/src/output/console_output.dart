@@ -1,4 +1,5 @@
 import '../console.dart';
+import '../utilities/line_terminator.dart';
 import 'console_style.dart';
 import 'console_text.dart';
 
@@ -9,6 +10,9 @@ extension ConsoleOutput on Console {
     ConsoleStyle style = ConsoleStyle.plain,
   }) =>
       output(ConsoleText(text, style), newline: newline);
+
+  /// Outputs a newline to the console.
+  void newline() => write(lineTerminator, newline: false);
 
   /// Outputs a [String] to the console with [ConsoleStyle.plain].
   void plain(String text, {bool newline = true}) =>

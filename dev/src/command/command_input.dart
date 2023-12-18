@@ -9,8 +9,24 @@ class CommandInput extends Iterable<String> {
     _internalArguments = List.from(_arguments);
   }
 
+  final _executablePath = <String>[];
+
+  String get executable => _executablePath.join(' ');
+
+  /// Appends the given path to the executable path.
+  void appendExecutablePath(String path) => _executablePath.add(path);
+
   @override
   Iterator<String> get iterator => _arguments.iterator;
+
+  /// Returns the next segment of the command input.
+  String? moveNext() {
+    if (_internalArguments.isNotEmpty) {
+      return _internalArguments.removeAt(0);
+    }
+
+    return null;
+  }
 
   /// Returns the next argument that is not a flag.
   ///
