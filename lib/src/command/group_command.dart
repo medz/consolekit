@@ -51,7 +51,6 @@ abstract class GroupCommand extends Command {
       }
 
       printHelp(context);
-      throw CommandError('Command not found.');
     } on CommandError catch (error) {
       context.console.newline();
       final message =
