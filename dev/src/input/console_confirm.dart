@@ -1,7 +1,6 @@
-import 'dart:io';
-
 import '../console.dart';
 import '../output/console_text.dart';
+import '../utilities/line_terminator.dart';
 
 extension on Console {
   /// Parse a [bool] from string.
@@ -32,7 +31,7 @@ extension ConsoleConfirm on Console {
   /// ```
   bool confirm(ConsoleText prompt, {bool newline = false}) {
     final text = switch (newline) {
-      true => ConsoleText(' (y/n) ${Platform.lineTerminator}> '),
+      true => ConsoleText(' (y/n) $lineTerminator> '),
       false => ConsoleText(' (y/n) > '),
     };
 

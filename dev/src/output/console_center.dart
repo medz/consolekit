@@ -1,8 +1,8 @@
 import 'dart:convert';
-import 'dart:io';
 import 'dart:math';
 
 import '../console.dart';
+import '../utilities/line_terminator.dart';
 
 extension ConsoleCenter on Console {
   /// Centers a [String] according to this console's [size].
@@ -10,7 +10,7 @@ extension ConsoleCenter on Console {
     return const LineSplitter()
         .convert(text)
         .center(width: size.$1, padding: padding)
-        .join(Platform.lineTerminator);
+        .join(lineTerminator);
   }
 
   /// Centers a iterable of [String] according to this console's [size].

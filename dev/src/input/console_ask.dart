@@ -1,7 +1,6 @@
-import 'dart:io';
-
 import '../console.dart';
 import '../output/console_text.dart';
+import '../utilities/line_terminator.dart';
 
 extension ConsoleASK on Console {
   /// Requests input from the console after displaying a prompt.
@@ -31,7 +30,7 @@ extension ConsoleASK on Console {
   /// If [secure] is `true`, the input will be hidden from the console.
   String ask(ConsoleText prompt, {bool secure = false, bool newline = true}) {
     final text = switch (newline) {
-      true => ConsoleText('${Platform.lineTerminator}> '),
+      true => ConsoleText('$lineTerminator> '),
       false => ConsoleText(' > '),
     };
 
