@@ -57,10 +57,10 @@ class CommandInput extends Iterable<String> {
   ///
   /// In the above example, `--output=build` is the next option, return
   /// `build` as the value.
-  (String? value, bool passedIn) moveNextOption(String name, [String? short]) {
+  String? moveNextOption(String name, [String? short]) {
     final (flagIndex, valueIndex) = findNextOptionIndex(name, short);
-    if (flagIndex == null) return (null, false);
-    if (valueIndex == null) return (null, true);
+    if (flagIndex == null) return null;
+    if (valueIndex == null) return null;
 
     final offset = switch (_internalArguments[valueIndex]) {
       String(startsWith: final startsWith) when startsWith('--$name=') =>
@@ -70,12 +70,13 @@ class CommandInput extends Iterable<String> {
         short.length + 2,
       _ => 0,
     };
+
     final value = _internalArguments[valueIndex].substring(offset);
-    if (value.isEmpty || value.startsWith('-')) return (null, true);
+    if (value.isEmpty || value.startsWith('-')) return null;
 
     _internalArguments.removeRange(flagIndex, valueIndex);
 
-    return (value, true);
+    return value;
   }
 }
 
