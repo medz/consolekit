@@ -1,33 +1,34 @@
 import 'dart:async';
+import 'dart:math';
 
+import '../../terminal.dart';
 import '../output/console_output.dart';
 import '../output/console_style.dart';
 import '_internal/output_help_list_child.dart';
 import 'command.dart';
 import 'command_context.dart';
-import 'signatures/command_signature.dart';
+import 'command_input.dart';
 
-class CommandGroup implements Command {
-  final Map<String, Command> commands;
+class CommandGroup extends Command {
+  late final Map<String, Command> commands;
   final Command? defaultCommand;
 
   CommandGroup(
-      {this.commands = const {}, this.defaultCommand, this.description});
+      {Map<String, Command>? commands, this.defaultCommand, this.description}) {
+    this.commands = commands ?? {};
+  }
 
   @override
   final String? description;
 
   @override
-  CommandSignature get signature => throw UnimplementedError();
-
-  @override
   FutureOr<void> run(CommandContext context) {
-    final (command) = commmand(context);
-    if (command != null) {
-      return command.run(context);
-    } else if (defaultCommand != null) {
-      return defaultCommand?.run(context);
-    }
+    // final (command) = commmand(context);
+    // if (command != null) {
+    //   return command.run(context);
+    // } else if (defaultCommand != null) {
+    //   return defaultCommand?.run(context);
+    // }
 
     outputHelp(context);
   }
@@ -42,8 +43,11 @@ class CommandGroup implements Command {
       context.console.plain(description!);
     }
 
-    final padding =
-        commands.keys.map((it) => it.length).reduce((a, b) => a > b ? a : b);
+    final padding = switch (commands) {
+      Map(isEmpty: true) => 2,
+      Map(keys: final keys) => keys.map((it) => it.length).reduce(max),
+    };
+
     if (commands.isNotEmpty) {
       context.console.newline();
       context.console.success('Commands:');
@@ -75,5 +79,28 @@ extension on CommandGroup {
 
     context.input.appendExecutablePath(name);
     return command;
+  }
+}
+
+void main(List<String> args) {
+  final group = CommandGroup();
+  final context = CommandContext(
+    Terminal(),
+    CommandInput(args),
+  );
+
+  group.commands['demo'] = DemoCommand();
+
+  group.run(context);
+}
+
+class DemoCommand extends Command {
+  @override
+  String get description => 'Demo';
+
+  @override
+  FutureOr<void> run(CommandContext context) {
+    // TODO: implement run
+    throw UnimplementedError();
   }
 }

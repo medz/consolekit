@@ -36,7 +36,10 @@ class Terminal implements Console {
   @override
   void output(ConsoleText text, {bool newline = true}) {
     void write(String text) {
-      final [...lines, last] = const LineSplitter().convert(text);
+      final lines = const LineSplitter().convert(text);
+      if (lines.isEmpty) return;
+
+      final last = lines.removeLast();
       for (final line in lines) {
         didOutputLines(1);
         stdout.writeln(line);

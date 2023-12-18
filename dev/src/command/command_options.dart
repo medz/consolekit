@@ -1,5 +1,5 @@
-import '../command_input.dart';
-import '_internal/any_signature.dart';
+import 'command_input.dart';
+import 'signatures/_internal/any_signature.dart';
 
 class CommandOption extends AnyOption {
   const CommandOption(

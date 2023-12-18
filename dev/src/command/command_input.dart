@@ -9,7 +9,7 @@ class CommandInput extends Iterable<String> {
     _internalArguments = List.from(_arguments);
   }
 
-  final _executablePath = <String>[];
+  final _executablePath = <String>['dart', 'run', 'exe'];
 
   String get executable => _executablePath.join(' ');
 
