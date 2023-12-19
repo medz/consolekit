@@ -101,7 +101,7 @@ extension on GroupCommand {
       return null;
     }
 
-    context.input.appendExecutablePath(name);
+    context.input.executablePath.add(name);
     return command;
   }
 }

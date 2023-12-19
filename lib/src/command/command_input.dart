@@ -1,25 +1,29 @@
 class CommandInput extends Iterable<String> {
-  final Iterable<String> _arguments;
-
   /// Internal arguments that are not removed when moving through the command
   /// input.
   late final List<String> _internalArguments;
 
-  CommandInput(String executable, Iterable<String> arguments)
-      : _arguments = arguments {
-    _internalArguments = List.from(_arguments);
-    _executablePath.add(executable);
+  CommandInput(String executable, Iterable<String> arguments) {
+    _internalArguments = List.from(arguments);
+    executablePath.add(executable);
   }
 
-  final _executablePath = <String>[];
+  /// Internal executable path that is not removed when moving through the
+  /// command input.
+  final executablePath = <String>[];
 
-  String get executable => _executablePath.join(' ');
+  /// Returns the executable path.
+  String get executable => executablePath.join(' ');
 
-  /// Appends the given path to the executable path.
-  void appendExecutablePath(String path) => _executablePath.add(path);
+  /// Adds the given argument to the command input.
+  void add(String argument) => _internalArguments.add(argument);
+
+  /// Adds the given arguments to the command input.
+  void addAll(Iterable<String> arguments) =>
+      _internalArguments.addAll(arguments);
 
   @override
-  Iterator<String> get iterator => _arguments.iterator;
+  Iterator<String> get iterator => _internalArguments.iterator;
 
   /// Returns the next segment of the command input.
   String? moveNext() {
