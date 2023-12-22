@@ -127,7 +127,8 @@ extension on Iterable<CommandOption> {
     final fragments = <ConsoleTextFragment>[];
     for (final option in this) {
       fragments.add(ConsoleTextFragment(' ['));
-      fragments.add(ConsoleTextFragment(option.name, ConsoleStyle.success));
+      fragments
+          .add(ConsoleTextFragment('--${option.name}', ConsoleStyle.success));
       if (option.short != null) {
         fragments.add(
             ConsoleTextFragment(',-${option.short}', ConsoleStyle.success));
@@ -148,7 +149,8 @@ extension on Iterable<CommandFlag> {
     final fragments = <ConsoleTextFragment>[];
     for (final option in this) {
       fragments.add(ConsoleTextFragment(' ['));
-      fragments.add(ConsoleTextFragment(option.name, ConsoleStyle.success));
+      fragments
+          .add(ConsoleTextFragment('--${option.name}', ConsoleStyle.success));
       if (option.short != null) {
         fragments.add(
             ConsoleTextFragment(',-${option.short}', ConsoleStyle.success));

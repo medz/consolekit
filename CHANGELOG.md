@@ -1,3 +1,7 @@
+## 0.0.4
+
+Fix not outputting full options and flag prefixes.
+
 ## 0.0.3
 
 - **BREAKING**: Remove `appendExecutablePath` in `CommandInput`.
